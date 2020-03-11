@@ -1,3 +1,4 @@
+import 'package:acm/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
@@ -43,12 +44,28 @@ class _HomePage extends State<HomePage> {
             title: Text("Delete"),
             backgroundColor: Colors.red,
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            title: Text("Share"),
+            backgroundColor: Colors.amber,
+          ),
         ],
 
         onTap: (index) {
           setState(
             () {
               ci = index;
+
+              if (ci == 3) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return ChatScreen();
+                    },
+                  ),
+                );
+              }
             },
           );
         },
@@ -158,21 +175,22 @@ class _HomePage extends State<HomePage> {
               height: 10,
             ),
             Align(
-                alignment: Alignment.bottomRight,
-                child: SmoothStarRating(
-                    allowHalfRating: false,
-                    onRatingChanged: (v) {
-                      rating = v;
-                      setState(() {});
-                    },
-                    starCount: 5,
-                    rating: rating,
-                    size: 20.0,
-                    filledIconData: Icons.star,
-                    halfFilledIconData: Icons.star_border,
-                    color: Colors.yellow,
-                    borderColor: Colors.yellow,
-                    spacing: 0.0),)
+              alignment: Alignment.bottomRight,
+              child: SmoothStarRating(
+                  allowHalfRating: false,
+                  onRatingChanged: (v) {
+                    rating = v;
+                    setState(() {});
+                  },
+                  starCount: 5,
+                  rating: rating,
+                  size: 20.0,
+                  filledIconData: Icons.star,
+                  halfFilledIconData: Icons.star_border,
+                  color: Colors.yellow,
+                  borderColor: Colors.yellow,
+                  spacing: 0.0),
+            )
           ],
         ),
       ),

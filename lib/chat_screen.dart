@@ -1,4 +1,3 @@
-//import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 //import 'package:flash_chat/constants.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -70,7 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            MessageStream(),
+            //MessageStream(),
             Container(
               //decoration: kMessageContainerDecoration,
               child: Row(

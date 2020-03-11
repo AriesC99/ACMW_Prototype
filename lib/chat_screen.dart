@@ -1,12 +1,12 @@
-import 'package:flash_chat/screens/login_screen.dart';
+//import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flash_chat/constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:flash_chat/constants.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
-final _firestore = Firestore.instance;
-FirebaseUser loggedinUser;
+// final _firestore = Firestore.instance;
+// FirebaseUser loggedinUser;
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
@@ -16,7 +16,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
-  final _auth = FirebaseAuth.instance;
+  // final _auth = FirebaseAuth.instance;
   String messageText;
   String emailKey = "_email_key";
   String passKey = "_pass_key";
@@ -24,27 +24,27 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
+    //getCurrentUser();
   }
 
-  void removeDetails() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
+  // void removeDetails() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    preferences.remove(emailKey);
-    preferences.remove(passKey);
-  }
+  //   preferences.remove(emailKey);
+  //   preferences.remove(passKey);
+  // }
 
-  void getCurrentUser() async {
-    try {
-      final user = await _auth.currentUser();
+  // void getCurrentUser() async {
+  //   try {
+  //     final user = await _auth.currentUser();
 
-      if (user != null) {
-        loggedinUser = user;
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  //     if (user != null) {
+  //       loggedinUser = user;
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +55,9 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
             icon: Icon(Icons.close),
             onPressed: () {
-              _auth.signOut();
-              removeDetails();
-              Navigator.pushReplacementNamed(context, LoginScreen.id);
+              // _auth.signOut();
+              // removeDetails();
+              // Navigator.pushReplacementNamed(context, LoginScreen.id);
               //Navigator.pop(context);
             },
           ),
@@ -72,7 +72,7 @@ class _ChatScreenState extends State<ChatScreen> {
           children: <Widget>[
             MessageStream(),
             Container(
-              decoration: kMessageContainerDecoration,
+              //decoration: kMessageContainerDecoration,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
@@ -84,26 +84,26 @@ class _ChatScreenState extends State<ChatScreen> {
                       onChanged: (value) {
                         messageText = value;
                       },
-                      decoration: kMessageTextFieldDecoration,
+                      //decoration: kMessageTextFieldDecoration,
                     ),
                   ),
                   FlatButton(
                     onPressed: () {
-                      if (messageText != null) {
-                        messageTextController.clear();
-                        _firestore
-                            .collection('messages')
-                            .document(Timestamp.now().toDate().toString())
-                            .setData({
-                          'sender': loggedinUser.email,
-                          'text': messageText,
-                        });
-                        messageText = null;
-                      }
+                      // if (messageText != null) {
+                      //   messageTextController.clear();
+                      //   _firestore
+                      //       .collection('messages')
+                      //       .document(Timestamp.now().toDate().toString())
+                      //       .setData({
+                      //     'sender': loggedinUser.email,
+                      //     'text': messageText,
+                      //    });
+                      //   messageText = null;
+                      // }
                     },
                     child: Text(
                       'Send',
-                      style: kSendButtonTextStyle,
+                      //style: kSendButtonTextStyle,
                     ),
                   ),
                 ],
@@ -119,46 +119,46 @@ class _ChatScreenState extends State<ChatScreen> {
 class MessageStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: _firestore.collection('messages').snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.lightBlueAccent,
-            ),
-          );
-        }
+    // return StreamBuilder<QuerySnapshot>(
+    //   stream: _firestore.collection('messages').snapshots(),
+    //   builder: (context, snapshot) {
+    //     if (!snapshot.hasData) {
+    //       return Center(
+    //         child: CircularProgressIndicator(
+    //           backgroundColor: Colors.lightBlueAccent,
+    //         ),
+    //       );
+    //     }
 
-        final messages = snapshot.data.documents.reversed;
-        List<MessageBubble> messageBubbles = [];
+    //     final messages = snapshot.data.documents.reversed;
+    //     List<MessageBubble> messageBubbles = [];
 
-        for (var message in messages) {
-          final messageText = message.data['text'];
-          final messageSender = message.data['sender'];
-          final currentUser = loggedinUser.email;
+    //     for (var message in messages) {
+    //       final messageText = message.data['text'];
+    //       final messageSender = message.data['sender'];
+    //       final currentUser = loggedinUser.email;
 
-          final messageBubble = MessageBubble(
-            sender: messageSender,
-            text: messageText,
-            isMe: currentUser == messageSender,
-          );
+    //       final messageBubble = MessageBubble(
+    //         sender: messageSender,
+    //         text: messageText,
+    //         isMe: currentUser == messageSender,
+    //       );
 
-          messageBubbles.add(messageBubble);
-        }
+    //       messageBubbles.add(messageBubble);
+    //     }
 
-        return Expanded(
-          child: ListView(
-            reverse: true,
-            padding: EdgeInsets.symmetric(
-              vertical: 20,
-              horizontal: 10,
-            ),
-            children: messageBubbles,
-          ),
-        );
-      },
-    );
+    //     return Expanded(
+    //       child: ListView(
+    //         reverse: true,
+    //         padding: EdgeInsets.symmetric(
+    //           vertical: 20,
+    //           horizontal: 10,
+    //         ),
+    //         children: messageBubbles,
+    //       ),
+    //     );
+    //   },
+    // );
   }
 }
 
